@@ -13,8 +13,8 @@ export class Task {
   status: string; // Pode ser 'pendente', 'em progresso', 'concluída'
 
   @ManyToOne(() => User, (user) => user.tasks)
-  usuario: User;
+  usuario: User; // O usuário que criou a tarefa
 
   @ManyToOne(() => User, (user) => user.assignedTasks, { nullable: true })
-  responsavel: User;
+  responsavel: User; // O usuário responsável pela tarefa
 }

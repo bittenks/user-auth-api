@@ -8,17 +8,16 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private userRepository: Repository<User>,
   ) {}
 
-  async create(username: string, password: string): Promise<User> {
-    const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const user = this.usersRepository.create({ username, password: hashedPassword });
-    return this.usersRepository.save(user);
+  async findByUsername(username: string): Promise<User> {
+    return this.userRepository.findOne({ where: { username } });
   }
 
-  async findByUsername(username: string): Promise<User | undefined> {
-    return this.usersRepository.findOne({ where: { username } });
+  async create(username: string, password: string): Promise<User> {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = this.userRepository.create({ username, password: hashedPassword });
+    return this.userRepository.save(newUser);
   }
 }
