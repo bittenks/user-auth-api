@@ -13,8 +13,8 @@ export class Task {
   status: string; // Pode ser 'pendente', 'em progresso', 'concluída'
 
   @ManyToOne(() => User, (user) => user.tasks)
-  usuario: User; // O usuário que criou a tarefa
+  usuario: User;
 
-  @ManyToOne(() => User, (user) => user.assignedTasks, { nullable: true })
-  responsavel: User; // O usuário responsável pela tarefa
+  @Column() // Mudando para um campo comum
+  responsavel: string;
 }

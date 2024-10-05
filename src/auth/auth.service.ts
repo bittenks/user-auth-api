@@ -14,20 +14,20 @@ export class AuthService {
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userService.findByUsername(username);
     if (user && await bcrypt.compare(password, user.password)) {
-      const { password, ...result } = user; // Remove a senha do resultado
+      const { password, ...result } = user;
       return result;
     }
-    return null; // Retorna null se o usuário não for encontrado ou a senha não for correta
+    return null;
   }
 
   async register(username: string, password: string): Promise<User> {
     return this.userService.create(username, password);
   }
 
-  async login(user: any) {
+  async login(user: User) {
     const payload = { username: user.username, sub: user.id };
     return {
-      access_token: this.jwtService.sign(payload), // Cria e retorna o token JWT
+      access_token: this.jwtService.sign(payload),
     };
   }
 }
