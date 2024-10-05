@@ -2,14 +2,12 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserService } from './user.service';
 import { User } from './user.entity';
-import { AuthModule } from '../auth/auth.module'; // se você tiver esse módulo
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User]), // Importando o repositório de User
-    AuthModule, // Caso você precise do AuthModule
+    TypeOrmModule.forFeature([User]), // O repositório do User
   ],
   providers: [UserService],
-  exports: [UserService], // Exporte o serviço se for necessário em outros módulos
+  exports: [UserService], // Exporte o UserService
 })
 export class UserModule {}
